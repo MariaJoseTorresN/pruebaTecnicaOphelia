@@ -1,41 +1,43 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WSOphelia.Models;
 using WSOphelia.Models.Dto;
+using WSOphelia.Models;
 using WSOphelia.Services.impl;
 
 namespace WSOphelia.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[api/controller]")]
-    
-    public class ClienteController : ControllerBase
+    public class FacturaController : ControllerBase
     {
-        private ImplClienteService _implClienteService;
+        private ImplFacturaService _implFacturaService;
         private IMapper mapper;
         protected RespuestaDTO _respuestaDTO;
 
-        public ClienteController(ImplClienteService _implClienteService, Mapper mapper) { 
-            this._implClienteService = _implClienteService;
+        public FacturaController(ImplFacturaService _implFacturaService, Mapper mapper)
+        {
+            this._implFacturaService = _implFacturaService;
             this.mapper = mapper;
             _respuestaDTO = new RespuestaDTO();
         }
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<ClienteDto>> GetAll()
+        public ActionResult<IEnumerable<FacturaDto>> GetAll()
         {
             try
             {
-                List<ClienteDto> clientesDto = new List<ClienteDto>();
-                List<Cliente> clientes = _implClienteService.getAll();
-                clientesDto = mapper.Map<List<ClienteDto>>(clientes);
+                List<FacturaDto> facturaDtos = new List<FacturaDto>();
+                List<Factura> facturas = _implFacturaService.getAll();
+                facturaDtos = mapper.Map<List<FacturaDto>>(facturas);
                 _respuestaDTO.Ok = true;
-                _respuestaDTO.Result = clientesDto;
-                _respuestaDTO.Message = "Lista de clientes.";
+                _respuestaDTO.Result = facturaDtos;
+                _respuestaDTO.Message = "Lista de facturas.";
                 return Ok(_respuestaDTO);
             }
-            catch (Exception ex) { 
+            catch (Exception ex)
+            {
                 _respuestaDTO.Ok = false;
                 _respuestaDTO.Message = ex.Message;
                 _respuestaDTO.Errors = new List<string> { ex.ToString() };
@@ -44,21 +46,21 @@ namespace WSOphelia.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<ClienteDto>> FindById(int id)
+        public ActionResult<IEnumerable<FacturaDto>> FindById(int id)
         {
             try
             {
-                var cliente = _implClienteService.findById(id);
-                if (cliente == null)
+                var factura = _implFacturaService.findById(id);
+                if (factura == null)
                 {
                     _respuestaDTO.Ok = false;
-                    _respuestaDTO.Message = "No se encuentra cliente con ese id, vuelva a revisar";
+                    _respuestaDTO.Message = "No se encuentra factura con ese id, vuelva a revisar";
                     return NotFound(_respuestaDTO);
                 }
-                var clienteDto = mapper.Map<ClienteDto>(cliente);
+                var facturaDto = mapper.Map<FacturaDto>(factura);
                 _respuestaDTO.Ok = true;
-                _respuestaDTO.Result = clienteDto;
-                _respuestaDTO.Message = "Cliente encontrado";
+                _respuestaDTO.Result = facturaDto;
+                _respuestaDTO.Message = "Factura encontrada";
                 return Ok(_respuestaDTO);
             }
             catch (Exception ex)
@@ -71,22 +73,22 @@ namespace WSOphelia.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ClienteDto> Create([FromBody] ClienteDto clienteDto)
+        public ActionResult<FacturaDto> Create([FromBody] FacturaDto facturaDto)
         {
             try
             {
-                var cliente = mapper.Map<Cliente>(clienteDto);
-                if (_implClienteService.findById(cliente.ClienteId) != null)
+                var factura = mapper.Map<Factura>(facturaDto);
+                if (_implFacturaService.findById(factura.FacturaId) != null)
                 {
                     _respuestaDTO.Ok = false;
-                    _respuestaDTO.Message = "Cliente existente, revice la id";
+                    _respuestaDTO.Message = "Factura existente, revice la id";
                     return BadRequest(_respuestaDTO);
                 }
-                cliente = _implClienteService.create(cliente);
+                factura = _implFacturaService.create(factura);
                 _respuestaDTO.Ok = true;
-                _respuestaDTO.Result = clienteDto;
-                _respuestaDTO.Message = "Cliente creado";
-                return CreatedAtAction("GetCliente", new { id = cliente.ClienteId }, _respuestaDTO);
+                _respuestaDTO.Result = facturaDto;
+                _respuestaDTO.Message = "Factura creada";
+                return CreatedAtAction("GetFactura", new { id = factura.FacturaId }, _respuestaDTO);
             }
             catch (Exception ex)
             {
@@ -98,15 +100,15 @@ namespace WSOphelia.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<ClienteDto> Update([FromBody] ClienteDto clienteDto, int id)
+        public ActionResult<FacturaDto> Update([FromBody] FacturaDto facturaDto, int id)
         {
             try
             {
-                var cliente = mapper.Map<Cliente>(clienteDto);
-                cliente = _implClienteService.update(cliente);
+                var factura = mapper.Map<Factura>(facturaDto);
+                factura = _implFacturaService.update(factura);
                 _respuestaDTO.Ok = true;
-                _respuestaDTO.Result = clienteDto;
-                _respuestaDTO.Message = "Cliente actualizado";
+                _respuestaDTO.Result = facturaDto;
+                _respuestaDTO.Message = "Factura actualizada";
                 return Ok(_respuestaDTO);
             }
             catch (Exception ex)
@@ -123,12 +125,12 @@ namespace WSOphelia.Controllers
         {
             try
             {
-                bool delete = _implClienteService.deleteById(id);
+                bool delete = _implFacturaService.deleteById(id);
                 if (delete)
                 {
                     _respuestaDTO.Ok = true;
                     _respuestaDTO.Result = delete;
-                    _respuestaDTO.Message = "Cliente eliminado";
+                    _respuestaDTO.Message = "Factura eliminada";
                     return Ok(_respuestaDTO);
                 }
                 _respuestaDTO.Ok = false;
@@ -145,5 +147,4 @@ namespace WSOphelia.Controllers
             }
         }
     }
-
 }

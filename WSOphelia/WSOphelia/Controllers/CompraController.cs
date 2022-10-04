@@ -1,41 +1,43 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WSOphelia.Models;
 using WSOphelia.Models.Dto;
+using WSOphelia.Models;
 using WSOphelia.Services.impl;
 
 namespace WSOphelia.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[api/controller]")]
-    
-    public class ClienteController : ControllerBase
+    public class CompraController : ControllerBase
     {
-        private ImplClienteService _implClienteService;
+        private ImplCompraService _implCompraService;
         private IMapper mapper;
         protected RespuestaDTO _respuestaDTO;
 
-        public ClienteController(ImplClienteService _implClienteService, Mapper mapper) { 
-            this._implClienteService = _implClienteService;
+        public CompraController(ImplCompraService implCompraService, Mapper mapper)
+        {
+            this._implCompraService = implCompraService;
             this.mapper = mapper;
             _respuestaDTO = new RespuestaDTO();
         }
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<ClienteDto>> GetAll()
+        public ActionResult<IEnumerable<CompraDto>> GetAll()
         {
             try
             {
-                List<ClienteDto> clientesDto = new List<ClienteDto>();
-                List<Cliente> clientes = _implClienteService.getAll();
-                clientesDto = mapper.Map<List<ClienteDto>>(clientes);
+                List<CompraDto> compraDtos = new List<CompraDto>();
+                List<Compra> compras = _implCompraService.getAll();
+                compraDtos = mapper.Map<List<CompraDto>>(compras);
                 _respuestaDTO.Ok = true;
-                _respuestaDTO.Result = clientesDto;
-                _respuestaDTO.Message = "Lista de clientes.";
+                _respuestaDTO.Result = compraDtos;
+                _respuestaDTO.Message = "Lista de compras.";
                 return Ok(_respuestaDTO);
             }
-            catch (Exception ex) { 
+            catch (Exception ex)
+            {
                 _respuestaDTO.Ok = false;
                 _respuestaDTO.Message = ex.Message;
                 _respuestaDTO.Errors = new List<string> { ex.ToString() };
@@ -44,21 +46,21 @@ namespace WSOphelia.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<ClienteDto>> FindById(int id)
+        public ActionResult<IEnumerable<CompraDto>> FindById(int id)
         {
             try
             {
-                var cliente = _implClienteService.findById(id);
-                if (cliente == null)
+                var compra = _implCompraService.findById(id);
+                if (compra == null)
                 {
                     _respuestaDTO.Ok = false;
-                    _respuestaDTO.Message = "No se encuentra cliente con ese id, vuelva a revisar";
+                    _respuestaDTO.Message = "No se encuentra compra con ese id, vuelva a revisar";
                     return NotFound(_respuestaDTO);
                 }
-                var clienteDto = mapper.Map<ClienteDto>(cliente);
+                var compraDto = mapper.Map<CompraDto>(compra);
                 _respuestaDTO.Ok = true;
-                _respuestaDTO.Result = clienteDto;
-                _respuestaDTO.Message = "Cliente encontrado";
+                _respuestaDTO.Result = compraDto;
+                _respuestaDTO.Message = "Compra encontrada";
                 return Ok(_respuestaDTO);
             }
             catch (Exception ex)
@@ -71,22 +73,22 @@ namespace WSOphelia.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ClienteDto> Create([FromBody] ClienteDto clienteDto)
+        public ActionResult<CompraDto> Create([FromBody] CompraDto compraDto)
         {
             try
             {
-                var cliente = mapper.Map<Cliente>(clienteDto);
-                if (_implClienteService.findById(cliente.ClienteId) != null)
+                var compra = mapper.Map<Compra>(compraDto);
+                if (_implCompraService.findById(compra.CompraId) != null)
                 {
                     _respuestaDTO.Ok = false;
-                    _respuestaDTO.Message = "Cliente existente, revice la id";
+                    _respuestaDTO.Message = "Compra existente, revice la id";
                     return BadRequest(_respuestaDTO);
                 }
-                cliente = _implClienteService.create(cliente);
+                compra = _implCompraService.create(compra);
                 _respuestaDTO.Ok = true;
-                _respuestaDTO.Result = clienteDto;
-                _respuestaDTO.Message = "Cliente creado";
-                return CreatedAtAction("GetCliente", new { id = cliente.ClienteId }, _respuestaDTO);
+                _respuestaDTO.Result = compraDto;
+                _respuestaDTO.Message = "Compra creada";
+                return CreatedAtAction("GetCompra", new { id = compra.CompraId }, _respuestaDTO);
             }
             catch (Exception ex)
             {
@@ -98,15 +100,15 @@ namespace WSOphelia.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<ClienteDto> Update([FromBody] ClienteDto clienteDto, int id)
+        public ActionResult<CompraDto> Update([FromBody] CompraDto compraDto, int id)
         {
             try
             {
-                var cliente = mapper.Map<Cliente>(clienteDto);
-                cliente = _implClienteService.update(cliente);
+                var compra = mapper.Map<Compra>(compraDto);
+                compra = _implCompraService.update(compra);
                 _respuestaDTO.Ok = true;
-                _respuestaDTO.Result = clienteDto;
-                _respuestaDTO.Message = "Cliente actualizado";
+                _respuestaDTO.Result = compraDto;
+                _respuestaDTO.Message = "Compra actualizada";
                 return Ok(_respuestaDTO);
             }
             catch (Exception ex)
@@ -123,12 +125,12 @@ namespace WSOphelia.Controllers
         {
             try
             {
-                bool delete = _implClienteService.deleteById(id);
+                bool delete = _implCompraService.deleteById(id);
                 if (delete)
                 {
                     _respuestaDTO.Ok = true;
                     _respuestaDTO.Result = delete;
-                    _respuestaDTO.Message = "Cliente eliminado";
+                    _respuestaDTO.Message = "Compra eliminada";
                     return Ok(_respuestaDTO);
                 }
                 _respuestaDTO.Ok = false;
@@ -145,5 +147,4 @@ namespace WSOphelia.Controllers
             }
         }
     }
-
 }

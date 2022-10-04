@@ -1,41 +1,43 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WSOphelia.Models;
 using WSOphelia.Models.Dto;
+using WSOphelia.Models;
 using WSOphelia.Services.impl;
 
 namespace WSOphelia.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[api/controller]")]
-    
-    public class ClienteController : ControllerBase
+    public class ProductoController : ControllerBase
     {
-        private ImplClienteService _implClienteService;
+        private ImplProductoService _implProductoService;
         private IMapper mapper;
         protected RespuestaDTO _respuestaDTO;
 
-        public ClienteController(ImplClienteService _implClienteService, Mapper mapper) { 
-            this._implClienteService = _implClienteService;
+        public ProductoController(ImplProductoService _implProductoService, Mapper mapper)
+        {
+            this._implProductoService = _implProductoService;
             this.mapper = mapper;
             _respuestaDTO = new RespuestaDTO();
         }
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<ClienteDto>> GetAll()
+        public ActionResult<IEnumerable<ProductoDto>> GetAll()
         {
             try
             {
-                List<ClienteDto> clientesDto = new List<ClienteDto>();
-                List<Cliente> clientes = _implClienteService.getAll();
-                clientesDto = mapper.Map<List<ClienteDto>>(clientes);
+                List<ProductoDto> productoDtos = new List<ProductoDto>();
+                List<Producto> productos = _implProductoService.getAll();
+                productoDtos = mapper.Map<List<ProductoDto>>(productos);
                 _respuestaDTO.Ok = true;
-                _respuestaDTO.Result = clientesDto;
-                _respuestaDTO.Message = "Lista de clientes.";
+                _respuestaDTO.Result = productoDtos;
+                _respuestaDTO.Message = "Lista de productos.";
                 return Ok(_respuestaDTO);
             }
-            catch (Exception ex) { 
+            catch (Exception ex)
+            {
                 _respuestaDTO.Ok = false;
                 _respuestaDTO.Message = ex.Message;
                 _respuestaDTO.Errors = new List<string> { ex.ToString() };
@@ -44,21 +46,21 @@ namespace WSOphelia.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<ClienteDto>> FindById(int id)
+        public ActionResult<IEnumerable<ProductoDto>> FindById(int id)
         {
             try
             {
-                var cliente = _implClienteService.findById(id);
-                if (cliente == null)
+                var producto = _implProductoService.findById(id);
+                if (producto == null)
                 {
                     _respuestaDTO.Ok = false;
-                    _respuestaDTO.Message = "No se encuentra cliente con ese id, vuelva a revisar";
+                    _respuestaDTO.Message = "No se encuentra producto con ese id, vuelva a revisar";
                     return NotFound(_respuestaDTO);
                 }
-                var clienteDto = mapper.Map<ClienteDto>(cliente);
+                var productoDto = mapper.Map<ProductoDto>(producto);
                 _respuestaDTO.Ok = true;
-                _respuestaDTO.Result = clienteDto;
-                _respuestaDTO.Message = "Cliente encontrado";
+                _respuestaDTO.Result = productoDto;
+                _respuestaDTO.Message = "Producto encontrado";
                 return Ok(_respuestaDTO);
             }
             catch (Exception ex)
@@ -71,22 +73,22 @@ namespace WSOphelia.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ClienteDto> Create([FromBody] ClienteDto clienteDto)
+        public ActionResult<ProductoDto> Create([FromBody] ProductoDto productoDto)
         {
             try
             {
-                var cliente = mapper.Map<Cliente>(clienteDto);
-                if (_implClienteService.findById(cliente.ClienteId) != null)
+                var producto = mapper.Map<Producto>(productoDto);
+                if (_implProductoService.findById(producto.ProductoId) != null)
                 {
                     _respuestaDTO.Ok = false;
-                    _respuestaDTO.Message = "Cliente existente, revice la id";
+                    _respuestaDTO.Message = "Producto existente, revice la id";
                     return BadRequest(_respuestaDTO);
                 }
-                cliente = _implClienteService.create(cliente);
+                producto = _implProductoService.create(producto);
                 _respuestaDTO.Ok = true;
-                _respuestaDTO.Result = clienteDto;
-                _respuestaDTO.Message = "Cliente creado";
-                return CreatedAtAction("GetCliente", new { id = cliente.ClienteId }, _respuestaDTO);
+                _respuestaDTO.Result = productoDto;
+                _respuestaDTO.Message = "Producto creado";
+                return CreatedAtAction("GetProducto", new { id = producto.ProductoId }, _respuestaDTO);
             }
             catch (Exception ex)
             {
@@ -98,15 +100,15 @@ namespace WSOphelia.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<ClienteDto> Update([FromBody] ClienteDto clienteDto, int id)
+        public ActionResult<ProductoDto> Update([FromBody] ProductoDto productoDto, int id)
         {
             try
             {
-                var cliente = mapper.Map<Cliente>(clienteDto);
-                cliente = _implClienteService.update(cliente);
+                var producto = mapper.Map<Producto>(productoDto);
+                producto = _implProductoService.update(producto);
                 _respuestaDTO.Ok = true;
-                _respuestaDTO.Result = clienteDto;
-                _respuestaDTO.Message = "Cliente actualizado";
+                _respuestaDTO.Result = productoDto;
+                _respuestaDTO.Message = "Producto actualizado";
                 return Ok(_respuestaDTO);
             }
             catch (Exception ex)
@@ -123,12 +125,12 @@ namespace WSOphelia.Controllers
         {
             try
             {
-                bool delete = _implClienteService.deleteById(id);
+                bool delete = _implProductoService.deleteById(id);
                 if (delete)
                 {
                     _respuestaDTO.Ok = true;
                     _respuestaDTO.Result = delete;
-                    _respuestaDTO.Message = "Cliente eliminado";
+                    _respuestaDTO.Message = "Producto eliminado";
                     return Ok(_respuestaDTO);
                 }
                 _respuestaDTO.Ok = false;
@@ -145,5 +147,4 @@ namespace WSOphelia.Controllers
             }
         }
     }
-
 }
