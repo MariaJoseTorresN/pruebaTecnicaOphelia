@@ -6,7 +6,5 @@
         public string Nombre { get; set; }
         public decimal Precio { get; set; }
         public int Cantidad { get; set; }
-
-        public virtual Compra Compras { get; set; }
     }
 }

@@ -1,0 +1,20 @@
+<div class='titulo'>
+    <h1>Cliente</h1>
+</div>
+<app-spinner *ngIf="loading"></app-spinner>
+<div *ngIf="cliente != null" class="container">
+    <mat-card class="card">
+        <mat-card-title>Cliente Id: {{cliente.clienteId}}</mat-card-title>
+        <mat-card-content>
+            <p><strong>Cedula: </strong>{{cliente.cedula}}</p>
+            <p><strong>Nombre: </strong>{{cliente.nombre}}</p>
+            <p><strong>Apellido: </strong>{{cliente.apellido}}</p>
+            <p><strong>FechaNacimiento: </strong>{{cliente.fechaNacimiento}}</p>
+            <p><strong>Celular: </strong>{{cliente.celular}}</p>
+            <p><strong>Correo: </strong>{{cliente.correo}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <mat-icon routerLink="/clientes" matTooltip="Volver" fontIcon="arrow_back"></mat-icon>
+        </mat-card-actions>
+    </mat-card>
+</div>

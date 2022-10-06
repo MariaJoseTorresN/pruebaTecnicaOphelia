@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WSOphelia.Models
 {
     public partial class Producto
     {
-        public Producto()
-        {
-            Compras = new HashSet<Compra>();
-        }
-
+        [Key]
         public int ProductoId { get; set; }
+        [Required, MaxLength(50)]
         public string Nombre { get; set; } = null!;
+        [Required]
         public decimal Precio { get; set; }
+        [Required]
         public int Cantidad { get; set; }
 
-        public virtual ICollection<Compra> Compras { get; set; }
     }
 }

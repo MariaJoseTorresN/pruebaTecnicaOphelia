@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WSOphelia.Models
 {
     public partial class Factura
     {
-        public Factura()
-        {
-            Compras = new HashSet<Compra>();
-        }
-
+        [Key]
         public int FacturaId { get; set; }
-        public int ClienteId { get; set; }
+        [Required]
         public DateTime Fecha { get; set; }
+        [Required]
         public decimal PrecioTotal { get; set; }
 
-        public virtual Cliente Cliente { get; set; } = null!;
-        public virtual ICollection<Compra> Compras { get; set; }
+        public int ClienteId { get; set; }
+        [ForeignKey("ClienteId")]
+        public Cliente? Cliente { get; set; }
     }
 }

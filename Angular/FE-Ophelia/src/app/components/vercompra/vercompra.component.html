@@ -1,0 +1,18 @@
+<div class='titulo'>
+    <h1>Compra</h1>
+</div>
+<app-spinner *ngIf="loading"></app-spinner>
+<div *ngIf="compra != null"  class="container">
+    <mat-card class="card">
+        <mat-card-title>Compra Id: {{compra.compraId}}</mat-card-title>
+        <mat-card-content>
+            <p><strong>PrecioPagar:</strong>{{compra.precioPagar}}</p>
+            <p><strong>Cantidad:</strong>{{compra.cantidad}}</p>
+            <p><strong>FacturaId:</strong>{{compra.facturaId}}</p>
+            <p><strong>ProductoId:</strong>{{compra.productoId}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <mat-icon routerLink="/compras" matTooltip="Volver" fontIcon="arrow_back"></mat-icon>
+        </mat-card-actions>
+    </mat-card>
+</div>

@@ -1,0 +1,67 @@
+<div class="titulo">
+    <h1>{{operacion}} cliente</h1>
+</div>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="container">
+    <mat-card class="card">
+        <mat-card-subtitle>
+            Datos Cliente
+        </mat-card-subtitle>
+        <form [formGroup]="form" (ngSubmit)="agregarEditarCliente()">
+            <mat-grid-list cols="2" rowHeight="80px">
+                <mat-grid-tile>
+                    <mat-icon fontIcon=badge></mat-icon>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cedula:</mat-label>
+                        <input type="number" formControlName="cedula" matInput placeholder="Ej. 1234567890" autocomplete="off">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-icon fontIcon=person></mat-icon>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre:</mat-label>
+                        <input formControlName="nombre" matInput placeholder="Ej. Jhon" autocomplete="off">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-icon fontIcon=person></mat-icon>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Apellido:</mat-label>
+                        <input formControlName="apellido" matInput placeholder="Ej. Doe" autocomplete="off">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-icon fontIcon=calendar_month></mat-icon>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fecha de nacimiento:</mat-label>
+                        <input type="date"max="2022-10-06" formControlName="fechaNacimiento" matInput placeholder="Ej. 1980-01-01" autocomplete="off">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-icon fontIcon=call></mat-icon>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Celular:</mat-label>
+                        <input type="number" formControlName="celular" matInput placeholder="Ej. 3001234567" autocomplete="off">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-icon fontIcon=contact_mail></mat-icon>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Correo:</mat-label>
+                        <input formControlName="correo" matInput placeholder="Ej. john.doe@gmail.com" autocomplete="off">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="2">
+                    <button mat-button routerLink="/clientes">
+                        <mat-icon>arrow_back</mat-icon>
+                        Volver
+                    </button>
+                    <button [disabled]="form.invalid" type="submit" mat-button color="accent">
+                        <mat-icon>task_alt</mat-icon>
+                        Aceptar
+                    </button>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </form>
+    </mat-card>
+</div>

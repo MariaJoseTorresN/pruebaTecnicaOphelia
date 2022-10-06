@@ -1,0 +1,32 @@
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+td, th {
+    width: 15%;
+}
+
+.delete {
+    cursor: pointer;
+    color: crimson;
+}
+
+.edit {
+    cursor: pointer;
+    color: aqua;
+}
+
+.search {
+    cursor: pointer;
+    color: darkslategrey;
+}
+
+.agregar {
+    font-size: 12px;
+    line-height: 28px;
+}

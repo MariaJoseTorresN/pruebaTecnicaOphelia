@@ -1,0 +1,52 @@
+<div class="titulo">
+    <h1>Facturas</h1>
+    <button mat-button routerLink="/">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+</div>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="container">
+    <mat-form-field appearance="standard">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input autocomplete="off">
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+        <!-- Fecha Column -->
+        <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+            <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+        </ng-container>
+
+        <!-- Precio Total Column -->
+        <ng-container matColumnDef="precioTotal">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio Total </th>
+            <td mat-cell *matCellDef="let element"> {{element.precioTotal}} </td>
+        </ng-container>
+
+        <!-- Cliente Column -->
+        <ng-container matColumnDef="clienteId">
+            <th mat-header-cell *matHeaderCellDef> ClienteId </th>
+            <td mat-cell *matCellDef="let element"> {{element.clienteId}} </td>
+        </ng-container>
+
+
+        <!-- Acciones Column -->
+        <ng-container matColumnDef="Acciones">
+            <th mat-header-cell *matHeaderCellDef>
+                <button routerLink="/agregarfactura" class="agregar" mat-raised-button color="primary">Agregar</button>
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon routerLink="/verfactura/{{element.facturaId}}" matTooltip="Ver" class="search" fontIcon="search"></mat-icon>
+                <mat-icon routerLink="/editarfactura/{{element.facturaId}}" matTooltip="Editar" class="edit" fontIcon="edit"></mat-icon>
+                <mat-icon (click)="eliminarFactura()" matTooltip="Eliminar" class="delete" fontIcon="delete"></mat-icon>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+</div>

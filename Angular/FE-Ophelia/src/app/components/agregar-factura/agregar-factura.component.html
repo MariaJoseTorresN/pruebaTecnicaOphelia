@@ -1,0 +1,53 @@
+<div class="titulo">
+    <h1>Agregar factura</h1>
+</div>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="container">
+    <mat-card class="card">
+        <mat-card-subtitle>
+            Datos Factura
+        </mat-card-subtitle>
+        <form [formGroup]="form" (ngSubmit)="agregarFactura()">
+            <mat-grid-list cols="2" rowHeight="80px">
+                <mat-grid-tile>
+                    <mat-icon fontIcon=calendar_month></mat-icon>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fecha:</mat-label>
+                        <input formControlName="Fecha" matInput placeholder="Ej. 01/01/2000" autocomplete="off">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-icon fontIcon=paid></mat-icon>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Precio Total:</mat-label>
+                        <input type="number" formControlName="PrecioTotal" matInput placeholder="Ej. 100000" autocomplete="off">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-icon fontIcon=mood></mat-icon>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cliente</mat-label>
+                        <input formControlName="Cliente" matInput placeholder="Cliente" autocomplete="off">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-icon fontIcon=request_quote></mat-icon>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Compras</mat-label>
+                        <input formControlName="Compras" matInput placeholder="Compras" autocomplete="off">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="2">
+                    <button mat-button routerLink="/facturas">
+                        <mat-icon>arrow_back</mat-icon>
+                        Volver
+                    </button>
+                    <button [disabled]="form.invalid" type="submit" mat-button color="accent">
+                        <mat-icon>task_alt</mat-icon>
+                        Agregar
+                    </button>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </form>
+    </mat-card>
+</div>

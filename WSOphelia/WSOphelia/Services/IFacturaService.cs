@@ -4,14 +4,14 @@ namespace WSOphelia.Services
 {
     public interface IFacturaService
     {
-        List<Factura> getAll();
+        Task<List<Factura>> getAll();
 
-        Factura create(Factura factura);
+        Task<Factura> create(Factura factura);
 
-        Factura update(Factura factura);
+        Task<Factura> update(Factura factura);
 
-        Factura findById(int id);
+        Task<Factura> findById(int id);
 
-        bool deleteById(int id);
+        Task<bool> deleteById(int id);
     }
 }

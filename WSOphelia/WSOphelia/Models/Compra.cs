@@ -1,17 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WSOphelia.Models
 {
     public partial class Compra
     {
+        [Key]
         public int CompraId { get; set; }
-        public int FacturaId { get; set; }
-        public int ProductoId { get; set; }
+        [Required]
         public decimal Precio { get; set; }
+        [Required]
         public int Cantidad { get; set; }
 
-        public virtual Factura Factura { get; set; } = null!;
-        public virtual Producto Producto { get; set; } = null!;
+        public int ProductoId { get; set; }
+        [ForeignKey("ProductoId")]
+        public Producto? Producto { get; set; }
+        public int FacturaId { get; set; }
+        [ForeignKey("FacturaId")]
+        public Factura? Factura { get; set; }
     }
 }

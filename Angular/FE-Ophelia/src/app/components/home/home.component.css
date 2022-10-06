@@ -1,0 +1,28 @@
+mat-grid-list {
+    margin-top: 2%;
+    margin-left: 15%;
+    width: 70%;
+}
+
+button {
+    font-size: 25px;
+    color:azure;
+    width: 90%;
+    height: 90%;
+}
+
+#gridOne{
+    background-color: #00ADE5;
+}
+
+#gridTwo {
+    background-color: #961b9c;
+}
+
+#gridThree {
+    background-color: #EBB010;
+}
+
+#gridFour {
+    background-color: #291c9e;
+}

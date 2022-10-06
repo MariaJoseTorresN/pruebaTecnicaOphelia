@@ -10,6 +10,5 @@
         public string Celular { get; set; }
         public string Correo { get; set; }
 
-        public Factura Factura { get; set; }
     }
 }

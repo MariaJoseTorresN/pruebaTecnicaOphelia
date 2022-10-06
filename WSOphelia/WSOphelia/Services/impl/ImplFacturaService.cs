@@ -1,5 +1,6 @@
 ﻿using WSOphelia.Models;
 using WSOphelia.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace WSOphelia.Services.impl
 {
@@ -7,49 +8,35 @@ namespace WSOphelia.Services.impl
     {
         private readonly facturacionOpheliaContext facturacionOpheliaContext;
 
-        public ImplFacturaService(facturacionOpheliaContext facturacionOpheliaContext)
+        public ImplFacturaService(facturacionOpheliaContext _facturacionOpheliaContext)
         {
-            this.facturacionOpheliaContext = facturacionOpheliaContext;
+            facturacionOpheliaContext = _facturacionOpheliaContext;
         }
 
-        public Factura create(Factura factura)
+        public Task<Factura> create(Factura factura)
         {
-            facturacionOpheliaContext.Facturas.Add(factura);
-            facturacionOpheliaContext.SaveChanges();
-            return factura;
+            throw new NotImplementedException();
         }
 
-        public bool deleteById(int id)
+        public Task<bool> deleteById(int id)
         {
-            var flag = true;
-            var factura = findById(id);
-            if (factura == null)
-            {
-                flag = false;
-            }
-            facturacionOpheliaContext.Facturas.Attach(factura);
-            facturacionOpheliaContext.Facturas.Remove(factura);
-            facturacionOpheliaContext.SaveChanges();
-            return flag;
+            throw new NotImplementedException();
         }
 
-        public Factura findById(int id)
+        public Task<Factura> findById(int id)
         {
-            return facturacionOpheliaContext.Facturas.Find(id);
+            throw new NotImplementedException();
         }
 
-        public List<Factura> getAll()
+        public async Task<List<Factura>> getAll()
         {
-            var list = new List<Factura>();
-            list = facturacionOpheliaContext.Facturas.ToList();
-            return list;
+            List<Factura> facturas = await facturacionOpheliaContext.Facturas.OrderByDescending(f => f.FacturaId).Include(f => f.Cliente).ToListAsync();
+            return facturas;
         }
 
-        public Factura update(Factura factura)
+        public Task<Factura> update(Factura factura)
         {
-            facturacionOpheliaContext.Facturas.Update(factura);
-            facturacionOpheliaContext.SaveChanges();
-            return factura;
+            throw new NotImplementedException();
         }
     }
 }

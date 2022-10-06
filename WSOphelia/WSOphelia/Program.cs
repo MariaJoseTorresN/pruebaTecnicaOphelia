@@ -1,3 +1,6 @@
+using WSOphelia.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add context
+builder.Services.AddDbContext<facturacionOpheliaContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Conexion"));
+});
 
 var app = builder.Build();
 
