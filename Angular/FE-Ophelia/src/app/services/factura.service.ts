@@ -30,6 +30,6 @@ export class FacturaService {
   }
 
   updateFactura(id: number, factura: Factura): Observable<void> {
-    return this.http.put<void>(this.myAppUrl+this.myFacturaApi, factura);
+    return this.http.put<void>(this.myAppUrl+this.myFacturaApi+id, factura);
   }
 }

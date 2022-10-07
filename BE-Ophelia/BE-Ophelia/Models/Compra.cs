@@ -13,7 +13,7 @@ namespace BE_Ophelia.Models
         public int precioPagado { get; set; }
         public int productoId { get; set; }
         [ForeignKey("productoId")]
-        public Producto cliente { get; set; }
+        public Producto producto { get; set; }
 
         public int facturaId { get; set; }
         [ForeignKey("facturaId")]

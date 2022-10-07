@@ -36,17 +36,8 @@ namespace BE_Ophelia.Repositories.Impl
 
         public async Task UpdateCompra(Compra compra)
         {
-            var compraA = await _context.Compras.FirstOrDefaultAsync(x => x.compraId == compra.compraId);
-
-            if (compraA == null)
-            {
-                compraA.cantidad = compra.cantidad;
-                compraA.precioPagado = compra.precioPagado;
-                compraA.productoId = compra.productoId;
-                compraA.facturaId = compra.facturaId;
-
-                await _context.SaveChangesAsync();
-            }
+            _context.Compras.Update(compra);
+            _context.SaveChangesAsync();
         }
     }
 }

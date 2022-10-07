@@ -38,16 +38,8 @@ namespace BE_Ophelia.Repositories.Impl
 
         public async Task UpdateFactura(Factura factura)
         {
-            var facturaA = await _context.Facturas.FirstOrDefaultAsync(x => x.facturaId == factura.facturaId);
-
-            if (facturaA == null)
-            {
-                facturaA.fecha = factura.fecha;
-                facturaA.precioTotal = factura.precioTotal;
-                facturaA.clienteId = factura.clienteId;
-
-                await _context.SaveChangesAsync();
-            }
+            _context.Facturas.Update(factura);
+            _context.SaveChangesAsync();
         }
     }
 }

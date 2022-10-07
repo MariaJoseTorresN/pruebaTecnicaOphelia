@@ -83,7 +83,7 @@ namespace BE_Ophelia.Controllers
                 var factura = _mapper.Map<Factura>(facturaDto);
                 factura = await _facturaRepository.CreateFactura(factura);
                 var billDto = _mapper.Map<FacturaDto>(factura);
-                return CreatedAtAction("Get", new { clienteId = billDto.facturaId }, facturaDto);
+                return CreatedAtAction("Get", new { facturaId = billDto.facturaId }, facturaDto);
             }
             catch (Exception ex)
             {

@@ -81,8 +81,8 @@ namespace BE_Ophelia.Controllers
             {
                 var compra = _mapper.Map<Compra>(compraDto);
                 compra = await _compraRepository.CreateCompra(compra);
-                var buyDto = _mapper.Map<ClienteDto>(compra);
-                return CreatedAtAction("Get", new { clienteId = buyDto.clienteId }, compraDto);
+                var buyDto = _mapper.Map<CompraDto>(compra);
+                return CreatedAtAction("Get", new { compraId = buyDto.compraId }, compraDto);
             }
             catch (Exception ex)
             {
