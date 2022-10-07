@@ -14,6 +14,7 @@ namespace BE_Ophelia.Repositories.Impl
 
         public async Task<Factura> CreateFactura(Factura factura)
         {
+            factura.cliente = await _context.Clientes.FindAsync(keyValues: factura.clienteId);
             _context.Facturas.Add(factura);
             await _context.SaveChangesAsync();
             return factura;

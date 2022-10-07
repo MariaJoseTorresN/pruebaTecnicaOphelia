@@ -22,7 +22,7 @@ export class AgregarCompraComponent implements OnInit {
     private router: Router,
     private aRoute: ActivatedRoute) { 
     this.form = this.fb.group({
-      precioPagar: ['', Validators.required],
+      precioPagado: ['', Validators.required],
       cantidad: ['', Validators.required],
       facturaId: ['', Validators.required],
       productoId: ['', Validators.required]
@@ -42,7 +42,7 @@ export class AgregarCompraComponent implements OnInit {
 
     //Objeto Compra
     const compra: Compra = {
-      precioPagar: this.form.value.precioPagar,
+      precioPagado: this.form.value.precioPagado,
       cantidad: this.form.value.cantidad,
       productoId: this.form.value.productoId,
       facturaId: this.form.value.facturaId
@@ -79,7 +79,7 @@ export class AgregarCompraComponent implements OnInit {
   obtenerCompra(id: number){
     this._compraService.getCompra(id).subscribe(data => {
       this.form.setValue({
-        precioPagar: data.precioPagar,
+        precioPagado: data.precioPagado,
         cantidad: data.cantidad,
         productoId: data.productoId,
         facturaId: data.facturaId

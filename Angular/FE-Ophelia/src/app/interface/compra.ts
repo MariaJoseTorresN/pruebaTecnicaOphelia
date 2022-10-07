@@ -1,6 +1,6 @@
 export interface Compra {
     compraId?: number,
-    precioPagar: number,
+    precioPagado: number,
     cantidad: number,
     facturaId: number,
     productoId: number

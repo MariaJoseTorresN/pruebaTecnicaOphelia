@@ -12,7 +12,7 @@ import { CompraService } from 'src/app/services/compra.service';
   styleUrls: ['./compra.component.css']
 })
 export class CompraComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['PrecioPagar', 'Cantidad', 'FacturaId', 'ProductoId', 'Acciones']
+  displayedColumns: string[] = ['precioPagado', 'cantidad', 'facturaId', 'productoId', 'Acciones']
   dataSource = new MatTableDataSource<Compra>();
   loading: boolean = false;
 
