@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Cliente } from 'src/app/interface/cliente';
 import { Factura } from 'src/app/interface/factura';
+import { ClienteService } from 'src/app/services/cliente.service';
 import { FacturaService } from 'src/app/services/factura.service';
 
 @Component({
@@ -14,10 +16,12 @@ export class AgregarFacturaComponent implements OnInit {
   loading: boolean = false;
   form: FormGroup;
   id: number;
+  cliente!: Cliente;
   operacion: string = 'Agregar';
 
   constructor(private fb: FormBuilder,
     private _facturaService:FacturaService,
+    private _clienteService:ClienteService,
     private _snackBar: MatSnackBar,
     private router: Router,
     private aRoute: ActivatedRoute){
@@ -43,18 +47,23 @@ export class AgregarFacturaComponent implements OnInit {
       this.form.setValue({
         fecha: data.fecha,
         precioTotal: data.precioTotal,
-        clienteId: data.clienteId
+        clienteId: data.clienteId,
+        cliente: data.cliente
       })
     })
   }
 
   agregarEditarFactura() {
-
-    //Objeto Factura
-    const factura: Factura = {
+    this._clienteService.getCliente(this.form.value.clienteId).subscribe(data =>{
+      this.cliente = data;
+      this.loading = false;
+      console.log(this.cliente);
+      //Objeto Factura
+      const factura: Factura = {
       fecha: this.form.value.fecha,
       precioTotal: this.form.value.precioTotal,
-      clienteId: this.form.value.clienteId
+      clienteId:this.form.value.clienteId,
+      cliente: this.cliente
     }
 
     if(this.id != 0){
@@ -63,7 +72,8 @@ export class AgregarFacturaComponent implements OnInit {
     }else{
       this.agregarFactura(factura);
     }
-    
+    })
+
   }
 
   editarFactura(id:number, factura:Factura){

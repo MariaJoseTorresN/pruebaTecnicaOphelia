@@ -44,6 +44,7 @@ export class FacturaComponent implements OnInit, AfterViewInit {
     this._facturaService.getFacturas().subscribe(data =>{
       this.dataSource.data = data;
       this.loading = false;
+      console.log(data);
     });
   }
 
