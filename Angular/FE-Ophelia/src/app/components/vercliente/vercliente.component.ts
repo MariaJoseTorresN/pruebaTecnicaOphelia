@@ -19,16 +19,15 @@ export class VerclienteComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.obtenerMascota();
+    this.obtenerCliente();
   }
 
-  obtenerMascota(){
+  obtenerCliente(){
     this.loading = true;
     this._clienteService.getCliente(this.id).subscribe(data =>{
       this.cliente = data;
       this.loading = false;
-    }
-    )
+    })
   }
 
 }

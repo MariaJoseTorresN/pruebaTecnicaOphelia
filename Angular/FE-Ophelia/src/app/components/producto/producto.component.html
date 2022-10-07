@@ -14,27 +14,21 @@
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
         <!-- Nombre Column -->
-        <ng-container matColumnDef="Nombre">
+        <ng-container matColumnDef="nombre">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-            <td mat-cell *matCellDef="let element"> {{element.Nombre}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
         </ng-container>
 
         <!-- Precio Column -->
-        <ng-container matColumnDef="Precio">
+        <ng-container matColumnDef="precio">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
-            <td mat-cell *matCellDef="let element"> {{element.Precio}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
         </ng-container>
 
         <!-- Cantidad Column -->
-        <ng-container matColumnDef="Cantidad">
+        <ng-container matColumnDef="cantidad">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
-            <td mat-cell *matCellDef="let element"> {{element.Cantidad}} </td>
-        </ng-container>        
-
-        <!-- Compras Column -->
-        <ng-container matColumnDef="Compra">
-            <th mat-header-cell *matHeaderCellDef> Compra </th>
-            <td mat-cell *matCellDef="let element"> {{element.Compra}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
         </ng-container>
 
         <!-- Acciones Column -->
@@ -43,9 +37,9 @@
                 <button routerLink="/agregarproducto" class="agregar" mat-raised-button color="primary">Agregar</button>
             </th>
             <td mat-cell *matCellDef="let element">
-                <mat-icon routerLink="/verproducto/1" matTooltip="Ver" class="search" fontIcon="search"></mat-icon>
-                <mat-icon routerLink="/editarproducto/1" matTooltip="Editar" class="edit" fontIcon="edit"></mat-icon>
-                <mat-icon (click)="eliminarProducto()" matTooltip="Eliminar" class="delete" fontIcon="delete"></mat-icon>
+                <mat-icon routerLink="/verproducto/{{element.productoId}}" matTooltip="Ver" class="search" fontIcon="search"></mat-icon>
+                <mat-icon routerLink="/editarproducto/{{element.productoId}}" matTooltip="Editar" class="edit" fontIcon="edit"></mat-icon>
+                <mat-icon (click)="eliminarProducto(element.productoId)" matTooltip="Eliminar" class="delete" fontIcon="delete"></mat-icon>
             </td>
         </ng-container>
 

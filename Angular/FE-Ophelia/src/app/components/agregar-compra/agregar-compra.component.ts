@@ -54,9 +54,6 @@ export class AgregarCompraComponent implements OnInit {
     } else {
       this.agregarCompra(compra);
     }
-
-    
-
   }
 
   agregarCompra(compra: Compra){

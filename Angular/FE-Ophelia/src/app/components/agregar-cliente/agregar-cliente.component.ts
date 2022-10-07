@@ -49,7 +49,7 @@ export class AgregarClienteComponent implements OnInit {
       apellido: this.form.value.apellido,
       fechaNacimiento: this.form.value.fechaNacimiento,
       celular: this.form.value.celular+"",
-      correo: this.form.value.correo,
+      correo: this.form.value.correo
     }
 
     if(this.id !=0) {
@@ -73,7 +73,7 @@ export class AgregarClienteComponent implements OnInit {
 
   editarCliente(id:number, cliente: Cliente){
     this.loading = true;
-    this._clienteService.updateCliente(id, cliente). subscribe(() =>{
+    this._clienteService.updateCliente(id, cliente).subscribe(() =>{
       this.loading = false;
       this.successMessage('editado');
       this.router.navigate(['/clientes']);

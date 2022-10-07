@@ -1,14 +1,14 @@
 <div class='titulo'>
-    <h1>Factura</h1>
+    <h1>Producto</h1>
 </div>
-<div class="container">
+<app-spinner *ngIf="loading"></app-spinner>
+<div *ngIf="producto != null" class="container">
     <mat-card class="card">
-        <mat-card-title>Id</mat-card-title>
+        <mat-card-title>Producto Id: {{producto.productoId}}</mat-card-title>
         <mat-card-content>
-            <p><strong>Nombre:</strong>Undertale</p>
-            <p><strong>Precio:</strong>120000</p>
-            <p><strong>Cantidad:</strong>50</p>
-            <p><strong>Compra:</strong>Compra</p>
+            <p><strong>Nombre:</strong>{{producto.nombre}}</p>
+            <p><strong>Precio:</strong>{{producto.precio}}</p>
+            <p><strong>Cantidad:</strong>{{producto.cantidad}}</p>
         </mat-card-content>
         <mat-card-actions>
             <mat-icon routerLink="/facturas" matTooltip="Volver" fontIcon="arrow_back"></mat-icon>

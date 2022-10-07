@@ -10,6 +10,7 @@ import { Producto } from '../interface/producto';
 export class ProductoService {
   private myAppUrl: string = environment.endpoint;
   private myProductApi: string = 'api/Producto/';
+  
   constructor(private http: HttpClient) { }
 
   getProductos(): Observable<Producto[]>{
