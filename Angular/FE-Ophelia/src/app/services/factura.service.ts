@@ -16,4 +16,20 @@ export class FacturaService {
   getFacturas():Observable<Factura[]>{
     return this.http.get<Factura[]>(this.myAppUrl+this.myFacturaApi);
   }
+
+  getFactura(id:number): Observable<Factura> {
+    return this.http.get<Factura>(this.myAppUrl+this.myFacturaApi+id);
+  }
+
+  deleteFactura(id:number): Observable<void>{
+    return this.http.delete<void>(this.myAppUrl+this.myFacturaApi+id);
+  }
+
+  addFactura(factura:Factura): Observable<Factura> {
+    return this.http.post<Factura>(this.myAppUrl+this.myFacturaApi, factura);
+  }
+
+  updateFactura(id: number, factura: Factura): Observable<void> {
+    return this.http.put<void>(this.myAppUrl+this.myFacturaApi, factura);
+  }
 }

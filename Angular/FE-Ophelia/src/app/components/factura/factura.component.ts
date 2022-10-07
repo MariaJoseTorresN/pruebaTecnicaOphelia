@@ -29,7 +29,9 @@ export class FacturaComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.paginator._intl.itemsPerPageLabel = 'Items por página';
+    if(this.dataSource.data.length > 0){
+      this.paginator._intl.itemsPerPageLabel = 'Items por página';
+    }
   }
 
   applyFilter(event: Event) {
@@ -41,18 +43,24 @@ export class FacturaComponent implements OnInit, AfterViewInit {
     this.loading = true;
     this._facturaService.getFacturas().subscribe(data =>{
       this.dataSource.data = data;
+      this.loading = false;
     });
   }
 
-  eliminarFactura() {
+  eliminarFactura(id:number) {
     this.loading = true;
-    setTimeout(() => {
+    this._facturaService.deleteFactura(id).subscribe(() => {
+      this.successMessage();
       this.loading = false;
-      this._snackBar.open('Factura eliminada', '', {
-      duration: 3000,
-      horizontalPosition: 'right'
-    });      
-    }, 3000);
+      this.obtenerfacturas();
+    });
+  }
+
+  successMessage() {
+    this._snackBar.open('Factura eliminada','', {
+      duration: 4000,
+      horizontalPosition: 'right',
+    });
   }
 
 }

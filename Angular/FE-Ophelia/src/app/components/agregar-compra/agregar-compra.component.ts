@@ -22,10 +22,10 @@ export class AgregarCompraComponent implements OnInit {
     private router: Router,
     private aRoute: ActivatedRoute) { 
     this.form = this.fb.group({
-      PrecioPagado: ['', Validators.required],
-      Cantidad: ['', Validators.required],
-      FacturaId: ['', Validators.required],
-      ProductoId: ['', Validators.required]
+      precioPagar: ['', Validators.required],
+      cantidad: ['', Validators.required],
+      facturaId: ['', Validators.required],
+      productoId: ['', Validators.required]
     })
 
     this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
@@ -42,7 +42,7 @@ export class AgregarCompraComponent implements OnInit {
 
     //Objeto Compra
     const compra: Compra = {
-      precioPagar: this.form.value.precioPagado,
+      precioPagar: this.form.value.precioPagar,
       cantidad: this.form.value.cantidad,
       productoId: this.form.value.productoId,
       facturaId: this.form.value.facturaId
