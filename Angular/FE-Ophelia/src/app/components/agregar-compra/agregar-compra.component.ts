@@ -3,7 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Compra } from 'src/app/interface/compra';
+import { Factura } from 'src/app/interface/factura';
+import { Producto } from 'src/app/interface/producto';
+import { ClienteService } from 'src/app/services/cliente.service';
 import { CompraService } from 'src/app/services/compra.service';
+import { FacturaService } from 'src/app/services/factura.service';
+import { ProductoService } from 'src/app/services/producto.service';
 
 @Component({
   selector: 'app-agregar-compra',
@@ -14,10 +19,15 @@ export class AgregarCompraComponent implements OnInit {
   loading: boolean = false;
   form: FormGroup;
   id: number;
+  factura!: Factura;
+  producto!: Producto;
   operacion: string = 'Agregar';
 
   constructor(private fb: FormBuilder,
     private _compraService: CompraService,
+    private _facturaService: FacturaService,
+    private _productoService: ProductoService,
+    private _clienteService: ClienteService,
     private _snackBar: MatSnackBar,
     private router: Router,
     private aRoute: ActivatedRoute) { 
@@ -39,21 +49,31 @@ export class AgregarCompraComponent implements OnInit {
   }
 
   agregarEditarCompra() {
-
-    //Objeto Compra
-    const compra: Compra = {
-      precioPagado: this.form.value.precioPagado,
-      cantidad: this.form.value.cantidad,
-      productoId: this.form.value.productoId,
-      facturaId: this.form.value.facturaId
-    }
-
-    if(this.id !=0) {
-      compra.compraId = this.id,
-      this.editarCompra(this.id,compra);
-    } else {
-      this.agregarCompra(compra);
-    }
+    this._facturaService.getFactura(this.form.value.facturaId).subscribe(data =>{
+      this.factura = data;
+      this._clienteService.getCliente(this.factura.clienteId).subscribe(data=>{
+        this.factura.cliente = data;
+        this._productoService.getProducto(this.form.value.productoId).subscribe(data =>{
+          this.producto = data;
+          this.loading = false;
+          //Objeto Compra
+          const compra: Compra = {
+            precioPagado: this.form.value.precioPagado,
+            cantidad: this.form.value.cantidad,
+            productoId: this.form.value.productoId,
+            facturaId: this.form.value.facturaId,
+            factura: this.factura,
+            producto: this.producto
+          }
+          if(this.id !=0) {
+            compra.compraId = this.id,
+            this.editarCompra(this.id,compra);
+          } else {
+            this.agregarCompra(compra);
+          }
+        })
+      })    
+    })
   }
 
   agregarCompra(compra: Compra){
